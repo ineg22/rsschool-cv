@@ -31,10 +31,10 @@ It is important for me to get the maximum amount of new knowledge from this cour
 
 ---
 
-### 5. Code examples (latest React)
+### 5. Code examples
 
 <details>
-  <summary>FormContainer.js</summary>
+  <summary>FormContainer.js (react task)</summary>
   <pre>
     import React from 'react'
     import FormComponent from './FormComponent'
@@ -79,81 +79,57 @@ It is important for me to get the maximum amount of new knowledge from this cour
   </pre>
 </details>
 <details>
-  <summary>FormComponent.js</summary>
+  <summary>gallery.js (HTML academy task)</summary>
   <pre>
-    import React from 'react'
+    'use strict';
+    (function () {
 
-    function FormComponent(props) {
-      return (
-        <form onSubmit={props.handleSubmit}>
-            <input
-              type='text'
-              value={props.firstName}
-              name='firstName'
-              placeholder='first name'
-              onChange={props.handleChange}
-            />
-            <br />
-            <input
-              type='text'
-              value={props.lastName}
-              name='lastName'
-              placeholder='last name'
-              onChange={props.handleChange}
-            />
-            <h1>{props.firstName} {props.lastName}</h1>
-            <textarea
-              value={props.textArea}
-              name='textArea'
-              onChange={props.handleChange}
-            />
-            <br />
-            <label>
-              <input
-                type='checkbox'
-                name='isFriendly'
-                checked={props.isFriendly}
-                onChange={props.handleChange}
-              /> you are friendly?
-            </label>
-            <br />
-            <label>
-              <input
-                type='radio'
-                name='gender'
-                value='male'
-                checked={props.gender === 'male'}
-                onChange={props.handleChange}
-              /> male
-            </label>
-            <br />
-            <label>
-              <input
-                type='radio'
-                name='gender'
-                value='female'
-                checked={props.gender === 'female'}
-                onChange={props.handleChange}
-              /> female
-            </label>
-            <br />
-            <label>your favorite color? </label>
-            <select
-              value={props.favColor}
-              onChange={props.handleChange}
-              name='favColor'
-            >
-              <option value='red'>red</option>
-              <option value='green'>green</option>
-              <option value='blue'>blue</option>
-            </select>
-            <h2>you choose:  {'' + props.isFriendly} {props.gender} {props.favColor}</h2>
-            <button>submit</button>
-          </form>
-      )
-    }
+      var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
+      var picturesContainer = document.querySelector('.pictures');
+      var fragment = document.createDocumentFragment();
 
-    export default FormComponent
+      var pictures = [];
+      for (var i = 0; i < 25; i++) {
+        pictures.push(generatePicture());
+      }
+
+      for (i = 0; i < pictures.length; i++) {
+        fragment.appendChild(renderPicture(pictures[i]));
+      }
+      picturesContainer.appendChild(fragment);
+
+      function generatePicture() {
+        var obj = {};
+        var photoId = pictures.length + 1;
+        obj.id = photoId;
+        obj.url = 'photos/' + photoId + '.jpg';
+        obj.likes = window.utils.randomSelect(15, 200);
+        obj.description = window.data.DESCRIPTIONS_ARRAY[window.utils.randomSelect(0, window.data.DESCRIPTIONS_ARRAY.length - 1)];
+        obj.comments = [];
+        var commentsCount = window.utils.randomSelect(1, 3);
+        for (var i = 0; i < commentsCount; i++) {
+          obj.comments.push(window.data.COMMENTS_ARRAY[window.utils.randomSelect(0, window.data.COMMENTS_ARRAY.length - 1)]);
+        }
+        return obj;
+      }
+
+      function renderPicture(obj) {
+        var pictureElement = pictureTemplate.cloneNode(true);
+        pictureElement.querySelector('.picture__img').setAttribute('src', obj.url);
+        pictureElement.querySelector('.picture__stat--likes').textContent = '' + obj.likes;
+        pictureElement.querySelector('.picture__stat--comments').textContent = '' + obj.comments.length;
+        pictureElement.querySelector('img').setAttribute('id', obj.id);
+        return pictureElement;
+      }
+
+      window.gallery = {
+        pictures: pictures
+      };
+
+      document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+
+    })();
+
   </pre>
 </details>
 
