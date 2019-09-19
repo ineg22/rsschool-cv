@@ -1,0 +1,29 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    width: 1024px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.cv-wrapper {
+    width: 80%;
+}
+
+.photo-wrapper {
+    width: 20%;
+    margin-top: 78px;
+}
+
+img {
+    height: 272px;
+}
+
+pre {
+    background-color: darkgrey;
+}
